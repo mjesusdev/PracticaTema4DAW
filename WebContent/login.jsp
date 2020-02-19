@@ -13,7 +13,7 @@
 			<h1 class="text-black-50 text-center">Inicio de Sesión Carrito / AG</h1>
 			<form name="login" action="login" method="POST">
 				<div class="col-12 mt-4">
-					<div class="form-group row justify-content-center">
+					<div class="form-group row justify-content-center"> 
 						<label for="inputUser" class="col-sm-2 col-form-label">Usuario:</label>
 						<div class="col-sm-3 col-mt-2">
 							<input type="text" class="form-control" name="inputUsuario" placeholder="Escriba su usuario aquí" 

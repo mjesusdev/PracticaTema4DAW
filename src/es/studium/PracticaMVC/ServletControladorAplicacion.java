@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
-public class ServletControladorLogin extends HttpServlet 
+@WebServlet("/aplicacion")
+public class ServletControladorAplicacion extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
        
@@ -27,25 +27,18 @@ public class ServletControladorLogin extends HttpServlet
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		// Guardar en variables el usuario y contraseña enviados por login.jsp
-		String nombreUsuario = request.getParameter("inputUsuario");
-		String passUsuario = request.getParameter("inputPassword");
+		String tituloLibro = request.getParameter("nombre");
+		float precioLibro = Float.parseFloat(request.getParameter("precio"));
+		String altalibros = request.getParameter("altalibros");
+		String libros = request.getParameter("libros");
 		String nextPage = "";
-		
-		if (nombreUsuario == null) {
-			nextPage = "/login.jsp";
-		}else{
-			ModeloMVC.comprobarDatos(nombreUsuario, passUsuario);
-			if (ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 0){
-				// Redirigimos al programa de gestión
-				nextPage = "/aplicaciongestion.jsp";
-			}else if(ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 1){
-				// Redirigimos a la página del carrito
-				nextPage = "/shopping";
-			}else{
-				// Redirigimos a la página de inicio de sesión
-				nextPage = "/login.jsp";
+		if (altalibros == null) {
+			if (tituloLibro != "" && precioLibro != 0.0) {
+				ModeloMVC.insertarlibros(tituloLibro, precioLibro);
+				nextPage = "/gestionlibros.jsp";
 			}
+		}else if(libros.equals("consulta")) {
+			ModeloMVC.consultarLibros();
 		}
 		
 		ServletContext servletContext = getServletContext();

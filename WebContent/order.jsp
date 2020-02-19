@@ -1,32 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page session="true" import="java.util.*,es.studium.PracticaMVC.*"%>
 <!DOCTYPE html>
-	<html>
+	<html lang="es">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Pedido</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<title>Carrito de Libros</title>
 	</head>
 	<body>
-		<h1>Librería MVC</h1>
-		<hr />
-		<br />
-		<p>
-			<strong>Elegir un libro y la cantidad:</strong>
-		</p>
-		<form name="AgregarForm" action="shopping" method="POST">
-			<input type="hidden" name="todo" value="add"> Título: 
-			<select name="idLibro">
-				<%
-					// Scriplet 1: Carga los libros en el SELECT
-					for (int i = 0; i < LibrosMVC.tamano(); i++) {
-						out.println("<option value='" + i + "'>");
-						out.println(LibrosMVC.getTitulo(i) + " | " + LibrosMVC.getAutor(i) + " | " + LibrosMVC.getPrecio(i));
-						out.println("</option>");
-					}
-				%>
-			</select> Cantidad: <input type="text" name="cantidad" size="10" value="1">
-			<input type="submit" value="Añadir a la cesta">
-		</form>
+		<div class="container mt-2">
+			<h1 class="text-black-50 text-center">Carrito de Libros</h1>
+			<form name="AgregarForm" action="shopping" method="POST">
+				<div class="col-12 mt-4">
+					<div class="form-group row justify-content-center"> 
+						<label for="inputUser" class="col-sm-2 col-form-label">Elija un libro</label>
+						<div class="col-sm-3">
+							<input type="hidden" name="todo" value="add">
+							<select name="idLibro">
+								<%
+									// Scriplet 1: Carga los libros en el SELECT
+									for (int i = 0; i < LibrosMVC.tamano(); i++) {
+										out.println("<option value='" + i + "'>");
+										out.println(LibrosMVC.getTitulo(i) + " | " + LibrosMVC.getAutor(i) + " | " + LibrosMVC.getPrecio(i));
+										out.println("</option>");
+									}
+								%>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row justify-content-center">
+						<label for="inputUser" class="col-sm-2 col-form-label">Cantidad</label>
+						<div class="col-sm-3 col-mt-2">
+							<input type="number" class="form-control" name="cantidad" size="10" value="1">
+						</div>
+					</div>
+					<div class="mx-auto mt-4" style="width: 200px;">
+						<input type="submit" class="btn btn-success" value="Añadir a la cesta">		
+					</div>
+				</div>
+			</form>
 		<hr />
 		<br />
 		<%
@@ -73,5 +86,9 @@
 		<%
 	}
 	%>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	</body>
 </html>

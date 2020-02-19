@@ -19,7 +19,6 @@ public class LibrosMVC
 	
 	private static final int MAX_SIZE = sacarLimiteRegistros();
 	private static int[] ids = new int[MAX_SIZE];
-	private static int[] ids_Autor = new int[MAX_SIZE];
 	private static String[] titulos = new String[MAX_SIZE];
 	private static String[] autores = new String[MAX_SIZE];
 	private static String[] precios = new String[MAX_SIZE];
@@ -125,9 +124,9 @@ public class LibrosMVC
 		return titulos[idLibro];
 	}
 
-	public static String getAutor(int idAutor)
+	public static String getAutor(int idLibro)
 	{
-		return autores[idAutor];
+		return autores[idLibro];
 	}
 
 	public static String getPrecio(int idLibro)

@@ -49,7 +49,7 @@ public class ServletControlador extends HttpServlet
 			// Creamos un elementoPedido y lo añadimos al carrito
 			ElementoPedido nuevoElementoPedido = new ElementoPedido(
 					Integer.parseInt(request.getParameter("idLibro")),
-					Integer.parseInt(request.getParameter("idAutor")),
+					Integer.parseInt(request.getParameter("idLibro")),
 					Integer.parseInt(request.getParameter("cantidad")));
 			if(elCarrito==null)
 			{

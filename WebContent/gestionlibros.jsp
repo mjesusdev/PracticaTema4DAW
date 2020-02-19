@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page session="true" import="java.util.*,es.studium.PracticaMVC.*"%>
 <!DOCTYPE html>
 <html lang="es">
 	<head>
@@ -58,13 +59,32 @@
 						<a class="list-group-item list-group-item-action list-group-item-danger" id="list-mod-list" data-toggle="list" href="#list-mod" role="tab" aria-controls="mod">Modificación</a>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-3 mt-2">
 				    <div class="tab-content" id="nav-tabContent">
 						<div class="tab-pane fade" id="list-alta" role="tabpanel" aria-labelledby="list-alta-list">
-							<p>El alta xDDDD</p>
+							<form name="altalibros" action="aplicacion" method="post">
+							  	<div class="form-group">
+								    <label>Nombre</label>
+								    <input type="text" class="form-control" name="nombre" placeholder="Escribe el nombre del libro">
+								</div>
+								<div class="form-group">
+								    <label for="exampleInputPassword1">Precio</label>
+								    <input type="text" class="form-control" name="precio" placeholder="Ej: 10.99">
+								</div>
+								<button type="submit" class="btn btn-primary">Dar de Alta</button>
+							</form>
 						</div>
 					    <div class="tab-pane fade" id="list-mod" role="tabpanel" aria-labelledby="list-mod-list">
-					    	<p>La modificación xDDD</p>
+					    	<form action="aplicacion" method="post">
+					    		<input type="hidden" name="libros" value="consulta"> 
+							  	<div class="form-group">
+								    <label for="exampleFormControlSelect1">Seleccione un libro para modificarlo</label>
+								    <select class="form-control" id="exampleFormControlSelect1">
+										
+								    </select>
+								</div>
+								<button type="submit" class="btn btn-primary">Dar de Alta</button>
+							</form>
 					    </div>
 				    </div>
 				</div>
