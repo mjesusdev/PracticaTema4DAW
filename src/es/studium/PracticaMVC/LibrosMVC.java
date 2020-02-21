@@ -3,6 +3,7 @@ package es.studium.PracticaMVC;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Calendar;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -88,6 +89,90 @@ public class LibrosMVC
 				autores[contador] += rs.getString("apellidosAutor");
 				contador++;
 			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				// Cerramos el resto de recursos
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public static void insertarPedido(float totalPedido) {
+		Connection conn = null;
+		Statement stmt = null;
+		Calendar calendar = Calendar.getInstance();
+		String dia = Integer.toString(calendar.get(Calendar.DATE));
+		String mes = Integer.toString(calendar.get(Calendar.MONTH) +1);
+		String anyo = Integer.toString(calendar.get(Calendar.YEAR));
+		String horaPedido = Integer.toString(calendar.get(Calendar.HOUR_OF_DAY));
+		String minutosPedido = Integer.toString(calendar.get(Calendar.MINUTE));
+		String fechaPedido = anyo + "-" + mes + "-" + dia;
+		String horaCompletaPedido = horaPedido + ":" + minutosPedido;
+		
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "INSERT INTO pedidos VALUES(NULL, '"+totalPedido+"', '"+fechaPedido+"', '"+horaCompletaPedido+"', 1);";
+			System.out.println(sentenciaSQL);
+			stmt.executeUpdate(sentenciaSQL);	
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				// Cerramos el resto de recursos
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public static void insertarLineaPedidos() {
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "INSERT INTO lineapedidos VALUES";
+			System.out.println(sentenciaSQL);
+			stmt.executeUpdate(sentenciaSQL);	
 		}
 		catch(Exception ex)
 		{

@@ -114,6 +114,8 @@ public class ServletControlador extends HttpServlet
 			// Coloca el precioTotal y la cantidadtotal en el request
 			request.setAttribute("precioTotal", sb.toString());
 			request.setAttribute("cantidadTotal", cantidadTotalOrdenada+"");
+			
+			LibrosMVC.insertarPedido(precioTotal);
 			// Redirige a checkout.jsp
 			nextPage = "/checkout.jsp";
 		}

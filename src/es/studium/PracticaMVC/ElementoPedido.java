@@ -44,7 +44,7 @@ public class ElementoPedido
 	
 	public String getAutor()
 	{
-		return LibrosMVC.getAutor(idAutor);
+		return LibrosMVC.getAutor(idLibro);
 	}
 	
 	public String getTitulo()
