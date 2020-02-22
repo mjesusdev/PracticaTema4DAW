@@ -21,7 +21,6 @@ public class ModeloMVC {
 	private static String[] titulos = new String[MAX_SIZE];
 	private static Float[] precios = new Float[MAX_SIZE];
 	private static ArrayList<String> informacionLibro = new ArrayList<String>();
-	private static String libroEscogido = "";
 	
 	public static int comprobarDatos(String nombreUsuario, String passUsuario) throws ServletException {
 		Connection conn = null;

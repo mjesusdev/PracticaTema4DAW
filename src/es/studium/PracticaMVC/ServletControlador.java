@@ -95,6 +95,7 @@ public class ServletControlador extends HttpServlet
 		}
 		else if (todo.equals("checkout"))
 		{
+			// ¿Pasar al modelo?
 			// Enviado por order.jsp
 			// Calcula el precio total de todos los elementos del carrito
 			float precioTotal = 0;
