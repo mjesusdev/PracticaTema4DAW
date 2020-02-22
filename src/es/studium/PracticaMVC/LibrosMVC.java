@@ -3,6 +3,7 @@ package es.studium.PracticaMVC;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.naming.InitialContext;
@@ -161,7 +162,49 @@ public class LibrosMVC
 		}
 	}
 	
-	public static void insertarLineaPedidos() {
+	public static int sacaridPedido() {
+		Connection conn = null;
+		Statement stmt = null;
+		int idPedido = 0;
+		
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "SELECT idPedido FROM pedidos;";
+			ResultSet rs = stmt.executeQuery(sentenciaSQL);
+			while(rs.next()) {
+				idPedido = rs.getInt("idPedido");
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				// Cerramos el resto de recursos
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return idPedido;
+	}
+	
+	public static void insertarLineaPedidos(Integer idLibro, int cantidadTotalOrdenada) {
 		Connection conn = null;
 		Statement stmt = null;
 		
@@ -170,7 +213,7 @@ public class LibrosMVC
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "INSERT INTO lineapedidos VALUES";
+			String sentenciaSQL = "INSERT INTO lineapedidos VALUES(NULL, "+idLibro+", "+sacaridPedido()+", "+cantidadTotalOrdenada+");";
 			System.out.println(sentenciaSQL);
 			stmt.executeUpdate(sentenciaSQL);	
 		}

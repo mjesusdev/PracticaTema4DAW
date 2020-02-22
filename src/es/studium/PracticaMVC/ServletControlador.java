@@ -100,8 +100,12 @@ public class ServletControlador extends HttpServlet
 			// Calcula el precio total de todos los elementos del carrito
 			float precioTotal = 0;
 			int cantidadTotalOrdenada = 0;
+			ArrayList<Integer> idLibro = new ArrayList<Integer>();
+			int cantidadLibro = 0;
 			for(ElementoPedido item: elCarrito)
 			{
+				idLibro.add(item.getIdLibro()+1);
+				cantidadLibro = item.getCantidad();
 				float precio = Float.parseFloat(item.getPrecio());
 				int cantidadOrdenada = item.getCantidad();
 				precioTotal += precio * cantidadOrdenada;
@@ -117,6 +121,10 @@ public class ServletControlador extends HttpServlet
 			request.setAttribute("cantidadTotal", cantidadTotalOrdenada+"");
 			
 			LibrosMVC.insertarPedido(precioTotal);
+			
+			for (int i=0;i<idLibro.size();i++) {
+				LibrosMVC.insertarLineaPedidos(idLibro.get(i), cantidadLibro);
+			}
 			// Redirige a checkout.jsp
 			nextPage = "/checkout.jsp";
 		}
