@@ -1,9 +1,14 @@
 package es.studium.PracticaMVC;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -368,6 +373,71 @@ public class ModeloMVC {
 	public static void borrarArrayList() {
 		informacionLibro.clear();
 		System.out.println(informacionLibro);
+	}
+	
+	public static ArrayList<String> consultarPedidos(){
+		Connection conn = null;
+		Statement stmt = null;
+		
+		ArrayList<String> datosPedidos = new ArrayList<String>();
+		datosPedidos.add("");
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "SELECT * FROM pedidos, lineapedidos WHERE pedidos.idPedido = lineapedidos.idPedidoFK;";
+			ResultSet rs = stmt.executeQuery(sentenciaSQL);
+			while (rs.next()) 
+			{
+				int idPedido = rs.getInt("idPedido");
+				Float totalPedido  = rs.getFloat("totalPedido");
+				Date fechaPedido = rs.getDate("fechaPedido");
+				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
+				Time horaPedido = rs.getTime("horaPedido");
+				int idLibroFK = rs.getInt("idLibroFK");
+				int cantidad = rs.getInt("cantidad");
+				// Añadir datos los datos al ArrayList
+				datosPedidos.add("Pedido Nº " + idPedido + " - " + " Libro: " + idLibroFK + " | " + " " + cantidad + " | " + totalPedido + "€" + " | " + fechaES + " | " + horaPedido);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return datosPedidos;
 	}
 	
 	public static int tamano()
