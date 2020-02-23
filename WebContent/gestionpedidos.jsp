@@ -62,9 +62,9 @@
 				    <div class="tab-content" id="nav-tabContent">
 					    <div class="tab-pane fade" id="list-consulta" role="tabpanel" aria-labelledby="list-mod-list">
 					    	<form action="aplicacion" method="post">
-					    		<input type="hidden" name="todo" value="consulta">
+					    		<input type="hidden" name="todo" value="consultapedidos">
 							  	<div class="form-group">
-								    <label for="exampleFormControlSelect1">Seleccione un pedido para modificarlo</label>
+								    <label for="exampleFormControlSelect1">Seleccione un pedido para consultar los detalles de este</label>
 								    <select class="form-control" name="pedidos" id="pedidos">
 										<%
 											// Cargar los libros con su información

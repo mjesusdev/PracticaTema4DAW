@@ -63,7 +63,7 @@
 				    <div class="tab-content" id="nav-tabContent">
 					    <div class="tab-pane fade show active" id="list-mod" role="tabpanel" aria-labelledby="list-mod-list">
 					    	<form action="aplicacion" method="post">
-					    		<input type="hidden" name="todo" value="modificacion">
+					    		<input type="hidden" name="todo" value="modificacionlibros">
 							  	<div class="form-group">
 								    <label>Nombre</label>
 								    <input type="text" class="form-control" name="nombreLibro" value="<% out.println(ModeloMVC.saberLibro().get(0));%>">

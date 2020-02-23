@@ -6,10 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -26,6 +23,7 @@ public class ModeloMVC {
 	private static String[] titulos = new String[MAX_SIZE];
 	private static Float[] precios = new Float[MAX_SIZE];
 	private static ArrayList<String> informacionLibro = new ArrayList<String>();
+	private static ArrayList<String> detallesPedido = new ArrayList<String>();
 	
 	public static int comprobarDatos(String nombreUsuario, String passUsuario) throws ServletException {
 		Connection conn = null;
@@ -400,7 +398,7 @@ public class ModeloMVC {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "SELECT * FROM pedidos, lineapedidos WHERE pedidos.idPedido = lineapedidos.idPedidoFK;";
+			String sentenciaSQL = "SELECT * FROM pedidos;";
 			ResultSet rs = stmt.executeQuery(sentenciaSQL);
 			while (rs.next()) 
 			{
@@ -409,10 +407,11 @@ public class ModeloMVC {
 				Date fechaPedido = rs.getDate("fechaPedido");
 				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
 				Time horaPedido = rs.getTime("horaPedido");
-				int idLibroFK = rs.getInt("idLibroFK");
-				int cantidad = rs.getInt("cantidad");
+				//int idLibroFK = rs.getInt("idLibroFK");
+				//int cantidad = rs.getInt("cantidad");
 				// Añadir datos los datos al ArrayList
-				datosPedidos.add("Pedido Nº " + idPedido + " - " + " Libro: " + idLibroFK + " | " + " " + cantidad + " | " + totalPedido + "€" + " | " + fechaES + " | " + horaPedido);
+				// datosPedidos.add("Pedido Nº " + idPedido + " - " + " Libro: " + idLibroFK + " | " + " " + cantidad + " | " + totalPedido + "€" + " | " + fechaES + " | " + horaPedido);
+				datosPedidos.add("Pedido Nº " + idPedido + " | " + totalPedido + "€" + " | " + fechaES + " | " + horaPedido);
 			}
 		}
 		catch(Exception ex)
@@ -438,6 +437,78 @@ public class ModeloMVC {
 			}
 		}
 		return datosPedidos;
+	}
+	
+	public static ArrayList<String> detallesPedido(String pedidoSeleccionado) {
+		Connection conn = null;
+		Statement stmt = null;
+		int idPedidoSeleccionado = Integer.parseInt(pedidoSeleccionado);
+		detallesPedido.add("");
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "SELECT * FROM pedidos, lineapedidos WHERE idPedido = 3 AND pedidos.idPedido = lineapedidos.idPedidoFK;";
+			ResultSet rs = stmt.executeQuery(sentenciaSQL);
+			while (rs.next()) 
+			{
+				int idPedido = rs.getInt("idPedido");
+				Float totalPedido  = rs.getFloat("totalPedido");
+				Date fechaPedido = rs.getDate("fechaPedido");
+				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
+				Time horaPedido = rs.getTime("horaPedido");
+				int idLibroFK = rs.getInt("idLibroFK");
+				int cantidad = rs.getInt("cantidad");
+				// Añadir datos los datos al ArrayList
+				detallesPedido.add(idPedido + "");
+				detallesPedido.add(idLibroFK + "");
+				detallesPedido.add(cantidad + "");
+				detallesPedido.add(totalPedido + "");
+				detallesPedido.add(fechaES + "|" + horaPedido);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return detallesPedido;
+	}
+	
+	public static ArrayList<String> insertarDetallesPedido(){
+		return detallesPedido;
 	}
 	
 	public static int tamano()
