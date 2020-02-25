@@ -31,11 +31,13 @@ public class ServletControlador extends HttpServlet
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		// Recupera la sesiÛn actual o crea una nueva si no existe
+		// Indicar codificaci√≥n de car√°cteres UTF-8
+		request.setCharacterEncoding("UTF-8");
+		// Recupera la sesi√≥n actual o crea una nueva si no existe
 		HttpSession session = request.getSession(true);
-		// Recupera el carrito de la sesiÛn actual
+		// Recupera el carrito de la sesi√≥n actual
 		ArrayList<ElementoPedido> elCarrito = (ArrayList<ElementoPedido>)session.getAttribute("carrito");
-		// Determina a quÈ p·gina jsp se redirigir·
+		// Determina a qu√© p√°gina jsp se redirigir√°
 		String nextPage = "";
 		String todo = request.getParameter("todo");
 		if(todo==null)
@@ -45,25 +47,25 @@ public class ServletControlador extends HttpServlet
 		}
 		else if(todo.equals("add"))
 		{
-			// Mandado por order.jsp con los par·metros idLibro y cantidad
-			// Creamos un elementoPedido y lo aÒadimos al carrito
+			// Mandado por order.jsp con los par√°metros idLibro y cantidad
+			// Creamos un elementoPedido y lo a√±adimos al carrito
 			ElementoPedido nuevoElementoPedido = new ElementoPedido(
 					Integer.parseInt(request.getParameter("idLibro")),
 					Integer.parseInt(request.getParameter("idLibro")),
 					Integer.parseInt(request.getParameter("cantidad")));
 			if(elCarrito==null)
 			{
-				// El carrito est· vacÌo
+				// El carrito est√° vac√≠o
 				elCarrito = new ArrayList<>();
 				elCarrito.add(nuevoElementoPedido);
-				// Enlazar el carrito con la sesiÛn
+				// Enlazar el carrito con la sesi√≥n
 				session.setAttribute("carrito", elCarrito);
 			}
 			else
 			{
-				// Comprueba si el libro est· ya en el carrito
-				// Si lo est·, actualizamos la cantidad
-				// Si no est·, lo aÒadimos
+				// Comprueba si el libro est√° ya en el carrito
+				// Si lo est√°, actualizamos la cantidad
+				// Si no est√°, lo a√±adimos
 				boolean encontrado = false;
 				Iterator<ElementoPedido> iter = elCarrito.iterator();
 				while(!encontrado&&iter.hasNext())
@@ -77,7 +79,7 @@ public class ServletControlador extends HttpServlet
 				}
 				if(!encontrado)
 				{
-					// Lo aÒade al carrito
+					// Lo a√±ade al carrito
 					elCarrito.add(nuevoElementoPedido);
 				}
 			}
@@ -86,7 +88,7 @@ public class ServletControlador extends HttpServlet
 		}
 		else if(todo.equals("remove"))
 		{
-			// Enviado por order.jsp con el par·metro indiceElemento
+			// Enviado por order.jsp con el par√°metro indiceElemento
 			// Borra el elemento indiceElemento del carrito
 			int indiceCarrito = Integer.parseInt(request.getParameter("indiceElemento"));
 			elCarrito.remove(indiceCarrito);
@@ -95,7 +97,7 @@ public class ServletControlador extends HttpServlet
 		}
 		else if (todo.equals("checkout"))
 		{
-			// øPasar al modelo?
+			// ¬øPasar al modelo?
 			// Enviado por order.jsp
 			// Calcula el precio total de todos los elementos del carrito
 			float precioTotal = 0;

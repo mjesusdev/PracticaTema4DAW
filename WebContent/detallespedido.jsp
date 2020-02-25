@@ -10,7 +10,7 @@
 		<title>Gestión de Pedidos - Detalles</title>
 	</head>
 	<body>
-				<div class="container">
+		<div class="container">
 			<div class="row">
 				<div class="col-12 mt-2">
 					<div class="p-4 mb-3 bg-dark text-white">
@@ -55,20 +55,38 @@
 			<div class="row">
 				<div class="col-3 mt-3">
 					<div class="list-group" id="list-tab" role="tablist">
-						<a class="list-group-item list-group-item-action list-group-item-success" id="list-consulta-list" data-toggle="list" href="#list-consulta" role="tab" aria-controls="consulta">Consulta</a>
+						<a class="list-group-item active list-group-item-action list-group-item-success" id="list-consulta-list" data-toggle="list" href="#list-consulta" role="tab" aria-controls="consulta">Consulta</a>
 					</div>
 				</div>
-				<div class="col-5 mt-2">
+				<div class="col-8 mt-2">
 				    <div class="tab-content" id="nav-tabContent">
-					    <div class="tab-pane fade" id="list-consulta" role="tabpanel" aria-labelledby="list-mod-list">
+					    <div class="tab-pane fade show active" id="list-consulta" role="tabpanel" aria-labelledby="list-mod-list">
 							<h3 class="text-success">Detalles del Pedido Nº <% out.println(ModeloMVC.insertarDetallesPedido().get(1));%></h3>
-							<p>
-								Libros Comprado/s: <% out.println(ModeloMVC.insertarDetallesPedido().get(2)); %><br/>
-								Cantidad: <% out.println(ModeloMVC.insertarDetallesPedido().get(3)); %><br/>
-								Total Pedido: <% out.println(ModeloMVC.insertarDetallesPedido().get(4)); %><br/>
-								Fecha y Hora del Pedido: <% out.println(ModeloMVC.insertarDetallesPedido().get(5)); %><br/>
-							</p>
-							<p>
+							<table class="table table-dark">
+						    	<thead>
+						    		<tr>
+						    			<th scope="col">Libros Comprado/s</th>
+						    			<th scope="col">Cantidad</th>
+						    			<th scope="col">Total Pedido</th>
+						    			<th scope="col">Hora y Fecha del Pedido</th>
+						    			<th scope="col">Estado Pedido</th>
+						    		</tr>
+						    	</thead>
+					    		<tbody>
+					    			<tr>
+					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(2));%></td>
+					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(3));%></td>
+					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(4));%></td>
+					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(5));%></td>
+					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(6));%></td>
+					    				<td>
+					    					<form action="aplicacion">
+					    						<input class="btn btn-warning" type="submit" name="todo" value="Cambiar Estado">
+					    					</form>
+					    				</td>
+					    			</tr>
+					    		</tbody>
+					    	</table>
 					    </div>
 				    </div>
 				</div>

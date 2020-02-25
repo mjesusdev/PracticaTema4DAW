@@ -27,13 +27,23 @@ public class ServletControladorAplicacion extends HttpServlet
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		// Indicar codificación de carácteres UTF-8
+		request.setCharacterEncoding("UTF-8");
 		String todo = request.getParameter("todo");
+		String pedidoSeleccionado = "";
 		String nextPage = "";
-		if (todo.equals("altalibros")) {
+		if (todo == null) {
+			nextPage = "/aplicaciongestion.jsp";
+		}else if (todo.equals("altalibros")) {
 			String tituloLibro = request.getParameter("nombre");
+			System.out.println(tituloLibro);
 			float precioLibro = Float.parseFloat(request.getParameter("precio"));
+			String autorSeleccionado = request.getParameter("autores");
+			String editorialSeleccionada = request.getParameter("editoriales");
 			if (tituloLibro != "" && precioLibro != 0.0) {
 				ModeloMVC.insertarlibros(tituloLibro, precioLibro);
+				ModeloMVC.insertarDatosEscriben(autorSeleccionado);
+				ModeloMVC.insertarDatosPertenecen(editorialSeleccionada);
 				nextPage = "/gestionlibros.jsp";
 			}
 		}else if(todo.equals("consultalibros")){
@@ -47,8 +57,12 @@ public class ServletControladorAplicacion extends HttpServlet
 			nextPage = "/gestionlibros.jsp";
 			ModeloMVC.borrarArrayList();
 		}else if(todo.equals("consultapedidos")) {
-			String pedidoSeleccionado = request.getParameter("pedidos");
+			pedidoSeleccionado = request.getParameter("pedidos");
 			ModeloMVC.detallesPedido(pedidoSeleccionado);
+			nextPage = "/detallespedido.jsp";
+		}else if(todo.equals("Cambiar Estado")) {
+			ModeloMVC.cambiarEstadoPedido();
+			ModeloMVC.actualizardatosPedido();
 			nextPage = "/detallespedido.jsp";
 		}
 		

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ page session="true" import="java.util.*,es.studium.PracticaMVC.*"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -69,8 +69,32 @@
 								    <input type="text" class="form-control" name="nombre" placeholder="Escribe el nombre del libro">
 								</div>
 								<div class="form-group">
-								    <label for="exampleInputPassword1">Precio</label>
-								    <input type="text" class="form-control" name="precio" placeholder="Ej: 10.99">
+								    <label for="precio">Precio</label>
+								    <input type="text" class="form-control" name="precio" placeholder="Ej: 10.99€">
+								</div>
+								<div class="form-group">
+									<label for="autores">Seleccione autor:</label>
+									<select class="form-control" name="autores" id="autores">
+										<%
+											for (int i = 1; i < ModeloMVC.insertarAutores().size(); i++) {
+												out.println("<option value='" + i + "'>");
+												out.println(ModeloMVC.insertarAutores().get(i));
+												out.println("</option>");
+											}
+										%>
+								    </select>
+								</div>
+								<div class="form-group">
+									<label for="editoriales">Seleccione editoriales:</label>
+									<select class="form-control" name="editoriales" id="editoriales">
+										<%
+											for (int i = 1; i < ModeloMVC.insertarEditoriales().size(); i++) {
+												out.println("<option value='" + i + "'>");
+												out.println(ModeloMVC.insertarEditoriales().get(i));
+												out.println("</option>");
+											}
+										%>
+								    </select>
 								</div>
 								<button type="submit" class="btn btn-primary">Dar de Alta</button>
 							</form>

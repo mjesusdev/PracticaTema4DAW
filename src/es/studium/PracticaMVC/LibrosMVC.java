@@ -25,7 +25,7 @@ public class LibrosMVC
 	private static String[] precios = new String[MAX_SIZE];
 	
 	/*
-	 * Método para sacar el número de registros que tiene la tabla de libros
+	 * MÃ©todo para sacar el nÃºmero de registros que tiene la tabla de libros
 	 */
 	public static int sacarLimiteRegistros() {
 		Connection conn = null;
@@ -34,9 +34,7 @@ public class LibrosMVC
 		
 		try
 		{
-			// Crea un contexto para poder luego buscar el recurso DataSource
 			InitialContext ctx = new InitialContext();
-			// Busca el recurso DataSource en el contexto
 			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
 			if(pool == null)
 			{
@@ -44,6 +42,7 @@ public class LibrosMVC
 			}
 		}
 		catch(NamingException ex){} catch (ServletException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -66,10 +65,24 @@ public class LibrosMVC
 		return idLibro;
 	}
 	
-	public static void cargarDatos() throws ServletException
+	public static void cargarDatos()
 	{
 		Connection conn = null;
 		Statement stmt = null;
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		try
 		{
@@ -98,7 +111,6 @@ public class LibrosMVC
 		{
 			try
 			{
-				// Cerramos el resto de recursos
 				if(stmt != null)
 				{
 					stmt.close();
@@ -129,10 +141,24 @@ public class LibrosMVC
 		
 		try
 		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try
+		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "INSERT INTO pedidos VALUES(NULL, '"+totalPedido+"', '"+fechaPedido+"', '"+horaCompletaPedido+"', 1);";
+			String sentenciaSQL = "INSERT INTO pedidos VALUES(NULL, '"+totalPedido+"', '"+fechaPedido+"', '"+horaCompletaPedido+"', 0, 1);";
 			System.out.println(sentenciaSQL);
 			stmt.executeUpdate(sentenciaSQL);	
 		}
@@ -144,7 +170,6 @@ public class LibrosMVC
 		{
 			try
 			{
-				// Cerramos el resto de recursos
 				if(stmt != null)
 				{
 					stmt.close();
@@ -168,6 +193,20 @@ public class LibrosMVC
 		
 		try
 		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try
+		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
@@ -185,7 +224,6 @@ public class LibrosMVC
 		{
 			try
 			{
-				// Cerramos el resto de recursos
 				if(stmt != null)
 				{
 					stmt.close();
@@ -209,6 +247,20 @@ public class LibrosMVC
 		
 		try
 		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try
+		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
@@ -224,7 +276,6 @@ public class LibrosMVC
 		{
 			try
 			{
-				// Cerramos el resto de recursos
 				if(stmt != null)
 				{
 					stmt.close();

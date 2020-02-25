@@ -27,7 +27,9 @@ public class ServletControladorLogin extends HttpServlet
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		// Guardar en variables el usuario y contrase�a enviados por login.jsp
+		// Indicar codificación de carácteres UTF-8
+		request.setCharacterEncoding("UTF-8");
+		// Guardar en variables el usuario y contraseña enviados por login.jsp
 		String nombreUsuario = request.getParameter("inputUsuario");
 		String passUsuario = request.getParameter("inputPassword");
 		String nextPage = "";
@@ -37,13 +39,13 @@ public class ServletControladorLogin extends HttpServlet
 		}else{
 			ModeloMVC.comprobarDatos(nombreUsuario, passUsuario);
 			if (ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 0){
-				// Redirigimos al programa de gesti�n
-				nextPage = "/aplicaciongestion.jsp";
+				// Redirigimos al controlador del programa de gestión
+				nextPage = "/aplicacion";
 			}else if(ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 1){
-				// Redirigimos a la p�gina del carrito
+				// Redirigimos al controlador del carrito
 				nextPage = "/shopping";
 			}else{
-				// Redirigimos a la p�gina de inicio de sesi�n
+				// Redirigimos a la página de inicio de sesión
 				nextPage = "/login.jsp";
 			}
 		}

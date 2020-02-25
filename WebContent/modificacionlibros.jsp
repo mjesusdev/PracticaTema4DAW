@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ page session="true" import="java.util.*,es.studium.PracticaMVC.*"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -55,8 +55,8 @@
 			<div class="row">
 				<div class="col-3 mt-3">
 					<div class="list-group" id="list-tab" role="tablist">
-						<a class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Alta</a>
-						<a class="list-group-item list-group-item-action list-group-item-danger" id="list-mod-list" data-toggle="list" href="#list-mod" role="tab" aria-controls="mod">Modificación</a>
+						<a class="list-group-item list-group-item-action list-group-item-success">Alta</a>
+						<a class="list-group-item active list-group-item-action list-group-item-danger" id="list-mod-list" data-toggle="list" href="#list-mod" role="tab" aria-controls="mod">Modificación</a>
 					</div>
 				</div>
 				<div class="col-5 mt-2">

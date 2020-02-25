@@ -55,12 +55,12 @@
 			<div class="row">
 				<div class="col-3 mt-3">
 					<div class="list-group" id="list-tab" role="tablist">
-						<a class="list-group-item list-group-item-action list-group-item-success" id="list-consulta-list" data-toggle="list" href="#list-consulta" role="tab" aria-controls="consulta">Consulta</a>
+						<a class="list-group-item active list-group-item-action list-group-item-success" id="list-consulta-list" data-toggle="list" href="#list-consulta" role="tab" aria-controls="consulta">Consulta</a>
 					</div>
 				</div>
 				<div class="col-5 mt-2">
 				    <div class="tab-content" id="nav-tabContent">
-					    <div class="tab-pane fade" id="list-consulta" role="tabpanel" aria-labelledby="list-mod-list">
+					    <div class="tab-pane fade show active" id="list-consulta" role="tabpanel" aria-labelledby="list-mod-list">
 					    	<form action="aplicacion" method="post">
 					    		<input type="hidden" name="todo" value="consultapedidos">
 							  	<div class="form-group">
