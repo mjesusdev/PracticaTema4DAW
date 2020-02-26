@@ -130,6 +130,10 @@ public class ServletControlador extends HttpServlet
 			// Redirige a checkout.jsp
 			nextPage = "/checkout.jsp";
 		}
+		else if(todo.equals("logout")) {
+			session.invalidate();
+			nextPage = "/login.jsp";
+		}
 		ServletContext servletContext = getServletContext();
 		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(nextPage);
 		requestDispatcher.forward(request, response);

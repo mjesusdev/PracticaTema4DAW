@@ -7,6 +7,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="./css/estilo.css" type="text/css">
 		<title>Confirmación de Pedido</title>
 	</head>
 	<body>
@@ -56,6 +57,12 @@
 			<div class="row justify-content-center">
 				<div class="col-4">
 					<a class="btn btn-info" data-toggle="collapse" href="shopping" role="button" aria-expanded="false" aria-controls="collapseExample">Pulsa aquí para comprar más libros</a>
+				</div>
+				<div class="col-2">
+					<form action="shopping" method="POST">
+						<input type="hidden" name="todo" value="logout">
+						<input type="submit" class="btn btn-danger" value="Salir">
+					</form>
 				</div>
 			</div>
 		</div>
