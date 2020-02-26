@@ -72,6 +72,36 @@
 								    <label for="exampleInputPassword1">Precio</label>
 								    <input type="text" class="form-control" name="precioLibro" value="<% out.println(ModeloMVC.saberLibro().get(1));%>">
 								</div>
+								<div class="form-group">
+									<p class="text-secondary">Autor Seleccionado en la BD: <% out.println(ModeloMVC.identificarAutor());%></p>
+								</div>
+								<div class="form-group">
+									<label for="autores">Modificar autor:</label>
+									<select class="form-control" name="autores" id="autores">
+										<%
+											for (int i = 1; i < ModeloMVC.insertarAutoresModificacion().size(); i++) {
+												out.println("<option value='" + i + "'>");
+												out.println(ModeloMVC.insertarAutoresModificacion().get(i));
+												out.println("</option>");
+											}
+										%>
+								    </select>
+								</div>
+								<div class="form-group">
+									<p class="text-secondary">Editorial Seleccionada en la BD: <% out.println(ModeloMVC.identificarEditorial());%></p>
+								</div>
+								<div class="form-group">
+									<label for="editoriales">Modificar editorial:</label>
+									<select class="form-control" name="editoriales" id="editoriales">
+										<%
+											for (int i = 1; i < ModeloMVC.insertarEditorialesModificacion().size(); i++) {
+												out.println("<option value='" + i + "'>");
+												out.println(ModeloMVC.insertarEditorialesModificacion().get(i));
+												out.println("</option>");
+											}
+										%>
+								    </select>
+								</div>
 								<input type="submit" class="btn btn-primary" value="Modificar Libro">
 							</form>
 					    </div>

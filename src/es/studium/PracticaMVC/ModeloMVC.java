@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
 
+
 public class ModeloMVC {
 	public static DataSource pool;
 	
@@ -23,6 +24,8 @@ public class ModeloMVC {
 	private static String[] titulos = new String[MAX_SIZE];
 	private static Float[] precios = new Float[MAX_SIZE];
 	private static ArrayList<String> informacionLibro = new ArrayList<String>();
+	private static ArrayList<String> informacionAutores = new ArrayList<String>();
+	private static ArrayList<String> informacionEditoriales = new ArrayList<String>();
 	private static ArrayList<String> detallesPedido = new ArrayList<String>();
 	
 	public static int comprobarDatos(String nombreUsuario, String passUsuario) throws ServletException {
@@ -54,12 +57,13 @@ public class ModeloMVC {
 			while (rs.next()) {
 				tipoUsuario = rs.getInt("tipoUsuario");
 			}
-			if (tipoUsuario == 0) {
-				datoscorrectos = 0;
-			}else if(tipoUsuario == 1){
+			
+			if (tipoUsuario == 1) {
 				datoscorrectos = 1;
-			}else{
+			}else if(tipoUsuario == 2){
 				datoscorrectos = 2;
+			}else{
+				datoscorrectos = 0;
 			}
 		}
 		catch(Exception ex)
@@ -591,6 +595,239 @@ public class ModeloMVC {
 		return informacionLibro;
 	}
 	
+	public static int identificarAutor() {
+		Connection conn = null;
+		Statement stmt = null;
+		
+		int idAutor = 0;
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "SELECT idAutorFK FROM escriben WHERE idLibroFK = '"+informacionLibro.get(2)+"';";
+			ResultSet rs = stmt.executeQuery(sentenciaSQL);
+			while (rs.next()) 
+			{
+				idAutor = rs.getInt("idAutorFK");
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return idAutor;
+	}
+	
+	public static int identificarEditorial() {
+		Connection conn = null;
+		Statement stmt = null;
+		int idEditorial = 0;
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "SELECT idEditorialFK FROM pertenecen WHERE idLibroFK = '"+informacionLibro.get(2)+"';";
+			ResultSet rs = stmt.executeQuery(sentenciaSQL);
+			while (rs.next()) 
+			{
+				idEditorial = rs.getInt("idEditorialFK");
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return idEditorial;
+	}
+	
+	public static ArrayList<String> insertarAutoresModificacion() {
+		Connection conn = null;
+		Statement stmt = null;
+		informacionAutores = new ArrayList<String>();
+		informacionAutores.add("");
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "SELECT DISTINCT idAutor, nombreAutor, apellidosAutor, fechaNacimientoAutor FROM escriben, autores" + 
+					" WHERE escriben.idAutorFK = autores.idAutor";
+			ResultSet rs = stmt.executeQuery(sentenciaSQL);
+			while (rs.next()) 
+			{
+				int idAutor = rs.getInt("idAutor");
+				String nombreAutor  = rs.getString("nombreAutor");
+				String apellidosAutor  = rs.getString("apellidosAutor");
+				Date fechaNacimientoAutor = rs.getDate("fechaNacimientoAutor");
+				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaNacimientoAutor);
+				informacionAutores.add(idAutor + " - " + nombreAutor + " " + apellidosAutor + " | " + fechaES);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return informacionAutores;
+	}
+	
+	public static ArrayList<String> insertarEditorialesModificacion() {
+		Connection conn = null;
+		Statement stmt = null;
+		informacionEditoriales = new ArrayList<String>();
+		informacionEditoriales.add("");
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "SELECT DISTINCT idEditorial, nombreEditorial, domicilioEditorial FROM pertenecen, editoriales" + 
+					" WHERE pertenecen.idEditorialFK = editoriales.idEditorial";
+			ResultSet rs = stmt.executeQuery(sentenciaSQL);
+			while (rs.next()) 
+			{
+				int idEditorial = rs.getInt("idEditorial");
+				String nombreEditorial  = rs.getString("nombreEditorial");
+				String domicilioEditorial  = rs.getString("domicilioEditorial");
+				informacionEditoriales.add(idEditorial + " - " + nombreEditorial + " " + domicilioEditorial);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return informacionEditoriales;
+	}
+	
 	public static void modificarLibro(String tituloLibro, float precioLibro) {
 		Connection conn = null;
 		Statement stmt = null;
@@ -641,9 +878,224 @@ public class ModeloMVC {
 		}
 	}
 	
-	public static void borrarArrayList() {
+	public static int sacarIdRelacionAutoresLibros() {
+		Connection conn = null;
+		Statement stmt = null;
+		int idEscriben = 0;
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "SELECT idEscriben FROM escriben WHERE idLibroFK = " +saberLibro().get(2)+ ";";
+			System.out.println(sentenciaSQL);
+			ResultSet rs = stmt.executeQuery(sentenciaSQL);
+			while (rs.next()) 
+			{
+				idEscriben = rs.getInt("idEscriben");
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return idEscriben;
+	}
+	
+	public static int sacarIdRelacionEditorialesLibros() {
+		Connection conn = null;
+		Statement stmt = null;
+		int idPertenecen = 0;
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "SELECT idPertenecen FROM pertenecen WHERE idLibroFK = " +saberLibro().get(2)+ ";";
+			System.out.println(sentenciaSQL);
+			ResultSet rs = stmt.executeQuery(sentenciaSQL);
+			while (rs.next()) 
+			{
+				idPertenecen = rs.getInt("idPertenecen");
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return idPertenecen;
+	}
+	
+	public static void modificarAutorLibro(String idAutor) {
+		Connection conn = null;
+		Statement stmt = null;
+		
+		int autorSeleccionado = Integer.parseInt(idAutor);
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "UPDATE escriben SET idAutorFK = " +autorSeleccionado+ " WHERE idEscriben = " +sacarIdRelacionAutoresLibros()+ ";";
+			stmt.executeUpdate(sentenciaSQL);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public static void modificarEditorialLibro(String idEditorial) {
+		Connection conn = null;
+		Statement stmt = null;
+		
+		int editorialSeleccionada = Integer.parseInt(idEditorial);
+		
+		try
+		{
+			InitialContext ctx = new InitialContext();
+			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
+			if(pool == null)
+			{
+				throw new ServletException("DataSource desconocida 'mysql_tiendalibros_practica'");
+			}
+		}
+		catch(NamingException ex){} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			String sentenciaSQL = "UPDATE pertenecen SET idAutorFK = " +editorialSeleccionada+ " WHERE idEscriben = " +sacarIdRelacionEditorialesLibros()+ ";";
+			stmt.executeUpdate(sentenciaSQL);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(stmt != null)
+				{
+					stmt.close();
+				}
+				if(conn != null)
+				{
+					conn.close();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public static void borrarArrayLists() {
 		informacionLibro.clear();
-		System.out.println(informacionLibro);
+		informacionAutores.clear();
+		informacionEditoriales.clear();
 	}
 	
 	public static ArrayList<String> consultarPedidos(){
@@ -680,7 +1132,7 @@ public class ModeloMVC {
 				Date fechaPedido = rs.getDate("fechaPedido");
 				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
 				Time horaPedido = rs.getTime("horaPedido");
-				datosPedidos.add("Pedido Nº " + idPedido + " | " + totalPedido + "�" + " | " + fechaES + " | " + horaPedido);
+				datosPedidos.add("Pedido Nº " + idPedido + " | " + totalPedido + "€" + " | " + fechaES + " | " + horaPedido);
 			}
 		}
 		catch(Exception ex)

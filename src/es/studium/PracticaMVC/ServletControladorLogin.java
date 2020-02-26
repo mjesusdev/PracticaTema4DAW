@@ -1,6 +1,8 @@
 package es.studium.PracticaMVC;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -38,10 +40,10 @@ public class ServletControladorLogin extends HttpServlet
 			nextPage = "/login.jsp";
 		}else{
 			ModeloMVC.comprobarDatos(nombreUsuario, passUsuario);
-			if (ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 0){
+			if (ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 1){
 				// Redirigimos al controlador del programa de gestión
 				nextPage = "/aplicacion";
-			}else if(ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 1){
+			}else if(ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 2){
 				// Redirigimos al controlador del carrito
 				nextPage = "/shopping";
 			}else{

@@ -36,7 +36,6 @@ public class ServletControladorAplicacion extends HttpServlet
 			nextPage = "/aplicaciongestion.jsp";
 		}else if (todo.equals("altalibros")) {
 			String tituloLibro = request.getParameter("nombre");
-			System.out.println(tituloLibro);
 			float precioLibro = Float.parseFloat(request.getParameter("precio"));
 			String autorSeleccionado = request.getParameter("autores");
 			String editorialSeleccionada = request.getParameter("editoriales");
@@ -53,9 +52,13 @@ public class ServletControladorAplicacion extends HttpServlet
 		}else if(todo.equals("modificacionlibros")) {
 			String nombreLibro = request.getParameter("nombreLibro");
 			float precioLibro = Float.parseFloat(request.getParameter("precioLibro"));
+			String autorSeleccionado = request.getParameter("autores");
+			String editorialSeleccionada = request.getParameter("editoriales");
 			ModeloMVC.modificarLibro(nombreLibro, precioLibro);
+			ModeloMVC.modificarAutorLibro(autorSeleccionado);
+			ModeloMVC.modificarEditorialLibro(editorialSeleccionada);
 			nextPage = "/gestionlibros.jsp";
-			ModeloMVC.borrarArrayList();
+			ModeloMVC.borrarArrayLists();
 		}else if(todo.equals("consultapedidos")) {
 			pedidoSeleccionado = request.getParameter("pedidos");
 			ModeloMVC.detallesPedido(pedidoSeleccionado);
