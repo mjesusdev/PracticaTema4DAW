@@ -48,25 +48,24 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-5 mt-2">
+				<div class="col-12 mt-2">
 				    <table class="table table-dark">
 				    	<thead>
 				    		<tr>
 				    			<th scope="col">Id</th>
-				    			<th scope="col">Nombre</th>
-				    			<th scope="col">Apellidos</th>
+				    			<th scope="col">Nombre Completo</th>
 				    			<th scope="col">Fecha de Nacimiento</th>
 				    		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<%
-								for (int i = 0; i < ModeloMVC.insertarAutores().size(); i++) {
+								for (int i = 1; i < ModeloMVC.insertarAutores().size(); i++) {
+									String[] datos = ModeloMVC.insertarAutores().get(i).split(" - ");
 							%>
 								<tr>
-									<td scope="col"><%=ModeloMVC.insertarAutores().get(i)%></td>
-									<td scope="col"><%=ModeloMVC.insertarAutores().get(i)%></td>
-									<td scope="col"><%=ModeloMVC.insertarAutores().get(i)%></td>
-									<td scope="col"><%=ModeloMVC.insertarAutores().get(i)%></td>
+									<td scope="col"><%=datos[0]%></td>
+									<td scope="col"><%=datos[1]%></td>
+									<td scope="col"><%=datos[2]%></td>
 								</tr>
 							<%
 								}

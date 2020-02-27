@@ -12,7 +12,6 @@ import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
 
-
 public class ModeloMVC {
 	public static DataSource pool;
 	
@@ -32,7 +31,7 @@ public class ModeloMVC {
 		Connection conn = null;
 		Statement stmt = null;
 		int tipoUsuario = 0;
-		int datoscorrectos = 0;
+		int datoscorrectos = 2;
 		
 		try
 		{
@@ -50,20 +49,18 @@ public class ModeloMVC {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "SELECT tipoUsuario FROM usuarios WHERE "
+			String sentenciaSQL = "SELECT * FROM usuarios WHERE "
 					+ "nombreUsuario = '"+nombreUsuario+"' AND "
 					+ "passUsuario = MD5('"+passUsuario+"')";
 			ResultSet rs = stmt.executeQuery(sentenciaSQL);
 			while (rs.next()) {
 				tipoUsuario = rs.getInt("tipoUsuario");
-			}
-			
-			if (tipoUsuario == 1) {
-				datoscorrectos = 1;
-			}else if(tipoUsuario == 2){
-				datoscorrectos = 2;
-			}else{
-				datoscorrectos = 0;
+				
+				if (tipoUsuario == 0) {
+					datoscorrectos = 0;
+				}else if(tipoUsuario == 1){
+					datoscorrectos = 1;
+				}
 			}
 		}
 		catch(Exception ex)
@@ -261,6 +258,7 @@ public class ModeloMVC {
 	public static ArrayList<String> insertarAutores() {
 		Connection conn = null;
 		Statement stmt = null;
+		// No se si va a funcionar xDD
 		ArrayList<String> informacionAutores = new ArrayList<String>();
 		informacionAutores.add("");
 		
@@ -282,7 +280,7 @@ public class ModeloMVC {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "SELECT * FROM autores;";
+			String sentenciaSQL = "SELECT * FROM autores ORDER BY 2,3;";
 			ResultSet rs = stmt.executeQuery(sentenciaSQL);
 			while (rs.next()) 
 			{
@@ -291,7 +289,7 @@ public class ModeloMVC {
 				String apellidosAutor  = rs.getString("apellidosAutor");
 				Date fechaNacimientoAutor = rs.getDate("fechaNacimientoAutor");
 				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaNacimientoAutor);
-				informacionAutores.add(idAutor + " - " + nombreAutor + " " + apellidosAutor + " | " + fechaES);
+				informacionAutores.add(idAutor + " - " + nombreAutor + " " + apellidosAutor + " - " + fechaES);
 			}
 		}
 		catch(Exception ex)
@@ -343,14 +341,14 @@ public class ModeloMVC {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "SELECT * FROM editoriales;";
+			String sentenciaSQL = "SELECT * FROM editoriales ORDER BY 2;";
 			ResultSet rs = stmt.executeQuery(sentenciaSQL);
 			while (rs.next()) 
 			{
 				int idEditorial = rs.getInt("idEditorial");
 				String nombreEditorial  = rs.getString("nombreEditorial");
 				String domicilioEditorial  = rs.getString("domicilioEditorial");
-				informacionEditoriales.add(idEditorial + " - " + nombreEditorial + " " + domicilioEditorial);
+				informacionEditoriales.add(idEditorial + " - " + nombreEditorial + " - " + domicilioEditorial);
 			}
 		}
 		catch(Exception ex)
@@ -1092,12 +1090,6 @@ public class ModeloMVC {
 		}
 	}
 	
-	public static void borrarArrayLists() {
-		informacionLibro.clear();
-		informacionAutores.clear();
-		informacionEditoriales.clear();
-	}
-	
 	public static ArrayList<String> consultarPedidos(){
 		Connection conn = null;
 		Statement stmt = null;
@@ -1184,7 +1176,7 @@ public class ModeloMVC {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "SELECT * FROM pedidos, lineapedidos WHERE idPedido = 3 AND pedidos.idPedido = lineapedidos.idPedidoFK;";
+			String sentenciaSQL = "SELECT * FROM pedidos, lineapedidos, libros WHERE idPedido = " +idPedidoSeleccionado+ " AND pedidos.idPedido = lineapedidos.idPedidoFK AND lineapedidos.idLibroFK = libros.idLibro;";
 			ResultSet rs = stmt.executeQuery(sentenciaSQL);
 			while (rs.next()) 
 			{
@@ -1194,6 +1186,7 @@ public class ModeloMVC {
 				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
 				Time horaPedido = rs.getTime("horaPedido");
 				int idLibroFK = rs.getInt("idLibroFK");
+				String tituloLibro = rs.getString("tituloLibro");
 				int cantidad = rs.getInt("cantidad");
 				int estadoPedido = rs.getInt("estadoPedido");
 
@@ -1201,7 +1194,7 @@ public class ModeloMVC {
 				
 				// Añadir datos los datos al ArrayList
 				detallesPedido.add(idPedido + "");
-				detallesPedido.add(idLibroFK + "");
+				detallesPedido.add(idLibroFK + " | " + tituloLibro);
 				detallesPedido.add(cantidad + "");
 				detallesPedido.add(totalPedido + "");
 				detallesPedido.add(fechaES + " | " + horaPedido);
@@ -1298,6 +1291,13 @@ public class ModeloMVC {
 		String idPedido = detallesPedido.get(1);
 		detallesPedido.clear();
 		detallesPedido(idPedido);
+	}
+	
+	public static void borrarArrayLists() {
+		informacionLibro.clear();
+		informacionAutores.clear();
+		informacionEditoriales.clear();
+		detallesPedido.clear();
 	}
 	
 	public static int tamano()

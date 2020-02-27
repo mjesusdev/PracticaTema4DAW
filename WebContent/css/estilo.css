@@ -1,3 +1,7 @@
 body{
 	background-color: #c5e3f6;
 }
+
+#logout{
+	float: right;
+}

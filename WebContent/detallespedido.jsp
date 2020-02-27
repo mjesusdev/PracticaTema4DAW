@@ -80,7 +80,7 @@
 					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(5));%></td>
 					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(6));%></td>
 					    				<td>
-					    					<form action="aplicacion">
+					    					<form action="aplicacion" method="POST">
 					    						<input class="btn btn-warning" type="submit" name="todo" value="Cambiar Estado">
 					    					</form>
 					    				</td>

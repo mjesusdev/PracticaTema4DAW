@@ -65,7 +65,7 @@ public class ServletControlador extends HttpServlet
 			{
 				// Comprueba si el libro está ya en el carrito
 				// Si lo está, actualizamos la cantidad
-				// Si no está, lo añadimos
+				// Si no está, lo a�adimos
 				boolean encontrado = false;
 				Iterator<ElementoPedido> iter = elCarrito.iterator();
 				while(!encontrado&&iter.hasNext())

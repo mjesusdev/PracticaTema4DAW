@@ -58,12 +58,6 @@
 				<div class="col-4">
 					<a class="btn btn-info" data-toggle="collapse" href="shopping" role="button" aria-expanded="false" aria-controls="collapseExample">Pulsa aquí para comprar más libros</a>
 				</div>
-				<div class="col-2">
-					<form action="shopping" method="POST">
-						<input type="hidden" name="todo" value="logout">
-						<input type="submit" class="btn btn-danger" value="Salir">
-					</form>
-				</div>
 			</div>
 		</div>
 	</body>

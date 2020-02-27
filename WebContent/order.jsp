@@ -49,6 +49,14 @@
 					</div>
 				</div>
 			</form>
+			<div class="row justify-content-center">
+				<div class="col-2">
+					<form action="shopping" method="POST">
+						<input type="hidden" name="todo" value="logout">
+						<input type="submit" class="btn btn-danger" value="Salir">
+					</form>
+				</div>
+			</div>
 		<hr />
 		<div class="row justify-content-center">
 			<%

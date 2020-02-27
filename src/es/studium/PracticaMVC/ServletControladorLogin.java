@@ -1,7 +1,6 @@
 package es.studium.PracticaMVC;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -31,7 +30,7 @@ public class ServletControladorLogin extends HttpServlet
 	{
 		// Indicar codificación de carácteres UTF-8
 		request.setCharacterEncoding("UTF-8");
-		// Guardar en variables el usuario y contraseña enviados por login.jsp
+		// Guardar en variables el usuario y contrase�a enviados por login.jsp
 		String nombreUsuario = request.getParameter("inputUsuario");
 		String passUsuario = request.getParameter("inputPassword");
 		String nextPage = "";
@@ -40,10 +39,10 @@ public class ServletControladorLogin extends HttpServlet
 			nextPage = "/login.jsp";
 		}else{
 			ModeloMVC.comprobarDatos(nombreUsuario, passUsuario);
-			if (ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 1){
+			if (ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 0){
 				// Redirigimos al controlador del programa de gestión
 				nextPage = "/aplicacion";
-			}else if(ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 2){
+			}else if(ModeloMVC.comprobarDatos(nombreUsuario, passUsuario) == 1){
 				// Redirigimos al controlador del carrito
 				nextPage = "/shopping";
 			}else{

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/aplicacion")
 public class ServletControladorAplicacion extends HttpServlet 
@@ -31,8 +32,11 @@ public class ServletControladorAplicacion extends HttpServlet
 		request.setCharacterEncoding("UTF-8");
 		String todo = request.getParameter("todo");
 		String pedidoSeleccionado = "";
+		String usuario = "admin";
+		HttpSession session = request.getSession(true);
 		String nextPage = "";
 		if (todo == null) {
+			session.setAttribute("usuario", usuario);
 			nextPage = "/aplicaciongestion.jsp";
 		}else if (todo.equals("altalibros")) {
 			String tituloLibro = request.getParameter("nombre");
@@ -60,6 +64,7 @@ public class ServletControladorAplicacion extends HttpServlet
 			nextPage = "/gestionlibros.jsp";
 			ModeloMVC.borrarArrayLists();
 		}else if(todo.equals("consultapedidos")) {
+			ModeloMVC.borrarArrayLists();
 			pedidoSeleccionado = request.getParameter("pedidos");
 			ModeloMVC.detallesPedido(pedidoSeleccionado);
 			nextPage = "/detallespedido.jsp";
@@ -67,6 +72,9 @@ public class ServletControladorAplicacion extends HttpServlet
 			ModeloMVC.cambiarEstadoPedido();
 			ModeloMVC.actualizardatosPedido();
 			nextPage = "/detallespedido.jsp";
+		}else if(todo.equals("logout")) {
+			session.invalidate();
+			nextPage = "/login.jsp";
 		}
 		
 		ServletContext servletContext = getServletContext();
