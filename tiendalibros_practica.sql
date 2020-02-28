@@ -84,7 +84,7 @@ CREATE TABLE `escriben` (
   KEY `idAutorFK` (`idAutorFK`),
   CONSTRAINT `escriben_ibfk_1` FOREIGN KEY (`idLibroFK`) REFERENCES `libros` (`idLibro`),
   CONSTRAINT `escriben_ibfk_2` FOREIGN KEY (`idAutorFK`) REFERENCES `autores` (`idAutor`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,6 @@ CREATE TABLE `escriben` (
 
 LOCK TABLES `escriben` WRITE;
 /*!40000 ALTER TABLE `escriben` DISABLE KEYS */;
-INSERT INTO `escriben` VALUES (1,1,1),(2,2,2),(3,3,2),(4,4,2),(5,5,2);
 /*!40000 ALTER TABLE `escriben` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +108,7 @@ CREATE TABLE `libros` (
   `tituloLibro` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
   `precioLibro` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`idLibro`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +117,6 @@ CREATE TABLE `libros` (
 
 LOCK TABLES `libros` WRITE;
 /*!40000 ALTER TABLE `libros` DISABLE KEYS */;
-INSERT INTO `libros` VALUES (1,'El señor de los anillos',60.00),(2,'El día que se perdió la cordura',9.45),(3,'El día que se perdió el amor',9.45),(4,'Todo lo que sucedió con Miranda Huff',17.95),(5,'La chica de nieve',17.95);
 /*!40000 ALTER TABLE `libros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +194,7 @@ CREATE TABLE `pertenecen` (
   KEY `idEditorialFK` (`idEditorialFK`),
   CONSTRAINT `pertenecen_ibfk_1` FOREIGN KEY (`idLibroFK`) REFERENCES `libros` (`idLibro`),
   CONSTRAINT `pertenecen_ibfk_2` FOREIGN KEY (`idEditorialFK`) REFERENCES `editoriales` (`idEditorial`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +203,6 @@ CREATE TABLE `pertenecen` (
 
 LOCK TABLES `pertenecen` WRITE;
 /*!40000 ALTER TABLE `pertenecen` DISABLE KEYS */;
-INSERT INTO `pertenecen` VALUES (1,1,2),(2,2,1),(3,3,1),(4,4,1),(5,5,1);
 /*!40000 ALTER TABLE `pertenecen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,4 +242,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-28 15:57:48
+-- Dump completed on 2020-02-28 16:06:44
