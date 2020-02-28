@@ -1115,13 +1115,14 @@ public class ModeloMVC {
 				int idPedido = rs.getInt("idPedido");
 				Float totalPedido  = rs.getFloat("totalPedido");
 				Date fechaPedido = rs.getDate("fechaPedido");
+				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
 				Time horaPedido = rs.getTime("horaPedido");
 				String guardarHora = horaPedido + "";
 				String[] sacarhora = guardarHora.split(":");
 				String horaES = sacarhora[0];
 				int restarhora = Integer.parseInt(horaES)-1;
 				String horaCompleta = restarhora + ":" + sacarhora[1] + ":" + sacarhora[2];
-				datosPedidos.add("Pedido Nº " + idPedido + " | " + totalPedido + "€" + " | " + fechaPedido + " | " + horaCompleta);
+				datosPedidos.add("Pedido Nº " + idPedido + " | " + totalPedido + "€" + " | " + fechaES + " | " + horaCompleta);
 			}
 		}
 		catch(Exception ex)
@@ -1198,7 +1199,7 @@ public class ModeloMVC {
 				detallesPedido.add(idPedido + "");
 				detallesPedido.add(idLibroFK + " | " + tituloLibro);
 				detallesPedido.add(cantidad + "");
-				detallesPedido.add(totalPedido + "");
+				detallesPedido.add(totalPedido + "€");
 				detallesPedido.add(fechaES + " | " + horaCompleta);
 				detallesPedido.add(opciones[(int)estadoPedido] + "");
 			}
