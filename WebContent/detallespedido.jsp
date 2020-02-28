@@ -65,7 +65,8 @@
 								Detalles del Pedido Nº 
 								<% 
 									String[] id = ModeloMVC.insertarDetallesPedido().get(1).split(" - ");
-									out.println(id[1]);
+									System.out.println(id[0]);
+									out.println(id[0]);
 								%>
 							</h3>
 							<table class="table table-dark">
@@ -81,12 +82,13 @@
 					    			<%
 										for (int i = 1; i < ModeloMVC.insertarDetallesPedido().size(); i++) {
 											String[] datos = ModeloMVC.insertarDetallesPedido().get(i).split(" - ");
+											System.out.println(datos[0]);
 									%>
 							    		<tr>
 							    			<td><%= datos[1] + " - " + datos[2]%></td>
 											<td><%= datos[3]%></td>
 											<td><%= datos[4]%></td>
-											<td><%= datos[5] + " " + datos[6]%></td>
+											<td><%= datos[5]%></td>
 							    		</tr>
 							    	<% 
 							    		}
@@ -99,8 +101,8 @@
 					    				<th scope="col">Estado Pedido</th>
 					    			</tr>
 					    			<tr>
+					    				<td><%= datos1[6]%></td>
 					    				<td><%= datos1[7]%></td>
-					    				<td><%= datos1[8]%></td>
 					    				<td>											
 					    					<form action="aplicacion" method="post">
 							    				<input class="btn btn-warning" type="submit" name="todo" value="Cambiar Estado">

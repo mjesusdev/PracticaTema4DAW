@@ -1197,7 +1197,8 @@ public class ModeloMVC {
 				String[] opciones = {"No Enviado", "Enviado"};
 				
 				// Añadir datos los datos al ArrayList
-				detallesPedido.add(idPedido + " - " + idLibroFK + " - " + tituloLibro + " - " + precioLibro + "€" + " - " + cantidad + " - " + "El " + fechaES + " - " + "a las: " + horaCompleta + " - " + totalPedido + "€" + " - " + opciones[(int)estadoPedido]);
+				detallesPedido.add(idPedido + " - " + idLibroFK + " - " + tituloLibro + " - " + precioLibro + "€" + " - " + cantidad + " - " + 
+				"El " + fechaES + " a las: " + horaCompleta + " - " + totalPedido + "€" + " - " + opciones[(int)estadoPedido]);
 			}
 		}
 		catch(Exception ex)
@@ -1235,7 +1236,7 @@ public class ModeloMVC {
 		
 		int estadoPedido = 0;
 		String[] datos = detallesPedido.get(1).split(" - ");
-		if (datos[8].equals("No Enviado")) {
+		if (datos[7].equals("No Enviado")) {
 			estadoPedido = 1;
 		}else{
 			estadoPedido = 0;
@@ -1259,7 +1260,8 @@ public class ModeloMVC {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "UPDATE pedidos SET estadoPedido = " + estadoPedido + " WHERE idPedido = " + datos[1] + ";";
+			String sentenciaSQL = "UPDATE pedidos SET estadoPedido = " + estadoPedido + " WHERE idPedido = " + datos[0] + ";";
+			System.out.println(sentenciaSQL);
 			stmt.executeUpdate(sentenciaSQL);
 		}
 		catch(Exception ex)
@@ -1288,7 +1290,7 @@ public class ModeloMVC {
 	
 	public static void actualizardatosPedido(){
 		String[] datos = detallesPedido.get(1).split(" - ");
-		String idPedido = datos[1];
+		String idPedido = datos[0];
 		detallesPedido.clear();
 		detallesPedido(idPedido);
 	}
