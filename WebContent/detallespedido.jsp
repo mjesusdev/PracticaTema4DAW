@@ -61,33 +61,55 @@
 				<div class="col-8 mt-2">
 				    <div class="tab-content" id="nav-tabContent">
 					    <div class="tab-pane fade show active" id="list-consulta" role="tabpanel" aria-labelledby="list-mod-list">
-							<h3 class="text-success">Detalles del Pedido Nº <% out.println(ModeloMVC.insertarDetallesPedido().get(1));%></h3>
+							<h3 class="text-success">
+								Detalles del Pedido Nº 
+								<% 
+									String[] id = ModeloMVC.insertarDetallesPedido().get(1).split(" - ");
+									out.println(id[1]);
+								%>
+							</h3>
 							<table class="table table-dark">
 						    	<thead>
 						    		<tr>
 						    			<th scope="col">Libros Comprado/s</th>
+						    			<th scope="col">Precio Libro</th>
 						    			<th scope="col">Cantidad</th>
-						    			<th scope="col">Total Pedido</th>
 						    			<th scope="col">Hora y Fecha del Pedido</th>
-						    			<th scope="col">Estado Pedido</th>
 						    		</tr>
 						    	</thead>
 					    		<tbody>
+					    			<%
+										for (int i = 1; i < ModeloMVC.insertarDetallesPedido().size(); i++) {
+											String[] datos = ModeloMVC.insertarDetallesPedido().get(i).split(" - ");
+									%>
+							    		<tr>
+							    			<td><%= datos[1] + " - " + datos[2]%></td>
+											<td><%= datos[3]%></td>
+											<td><%= datos[4]%></td>
+											<td><%= datos[5] + " " + datos[6]%></td>
+							    		</tr>
+							    	<% 
+							    		}
+					    			%>
+					    			<%
+					    				String[] datos1 = ModeloMVC.insertarDetallesPedido().get(1).split(" - ");
+					    			%>
 					    			<tr>
-					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(2));%></td>
-					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(3));%></td>
-					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(4));%></td>
-					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(5));%></td>
-					    				<td><% out.println(ModeloMVC.insertarDetallesPedido().get(6));%></td>
-					    				<td>
-					    					<form action="aplicacion" method="POST">
-					    						<input class="btn btn-warning" type="submit" name="todo" value="Cambiar Estado">
-					    					</form>
-					    				</td>
+					    				<th scope="col">Total Pedido</th>
+					    				<th scope="col">Estado Pedido</th>
 					    			</tr>
+					    			<tr>
+					    				<td><%= datos1[7]%></td>
+					    				<td><%= datos1[8]%></td>
+					    				<td>											
+					    					<form action="aplicacion" method="post">
+							    				<input class="btn btn-warning" type="submit" name="todo" value="Cambiar Estado">
+							    			</form>
+							    		</td>
+							    	</tr>
 					    		</tbody>
 					    	</table>
-					    </div>
+					   </div>
 				    </div>
 				</div>
 			</div>

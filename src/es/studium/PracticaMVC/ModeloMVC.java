@@ -1115,7 +1115,7 @@ public class ModeloMVC {
 				int idPedido = rs.getInt("idPedido");
 				Float totalPedido  = rs.getFloat("totalPedido");
 				Date fechaPedido = rs.getDate("fechaPedido");
-				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
+				String fechaES = new SimpleDateFormat("dd/MM/yyyy").format(fechaPedido);
 				Time horaPedido = rs.getTime("horaPedido");
 				String guardarHora = horaPedido + "";
 				String[] sacarhora = guardarHora.split(":");
@@ -1181,7 +1181,7 @@ public class ModeloMVC {
 				int idPedido = rs.getInt("idPedido");
 				Float totalPedido  = rs.getFloat("totalPedido");
 				Date fechaPedido = rs.getDate("fechaPedido");
-				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
+				String fechaES = new SimpleDateFormat("dd/MM/yyyy").format(fechaPedido);
 				Time horaPedido = rs.getTime("horaPedido");
 				String guardarHora = horaPedido + "";
 				String[] sacarhora = guardarHora.split(":");
@@ -1189,6 +1189,7 @@ public class ModeloMVC {
 				int restarhora = Integer.parseInt(horaES)-1;
 				String horaCompleta = restarhora + ":" + sacarhora[1] + ":" + sacarhora[2];
 				int idLibroFK = rs.getInt("idLibroFK");
+				Float precioLibro = rs.getFloat("precioLibro");
 				String tituloLibro = rs.getString("tituloLibro");
 				int cantidad = rs.getInt("cantidad");
 				int estadoPedido = rs.getInt("estadoPedido");
@@ -1196,12 +1197,7 @@ public class ModeloMVC {
 				String[] opciones = {"No Enviado", "Enviado"};
 				
 				// Añadir datos los datos al ArrayList
-				detallesPedido.add(idPedido + "");
-				detallesPedido.add(idLibroFK + " | " + tituloLibro);
-				detallesPedido.add(cantidad + "");
-				detallesPedido.add(totalPedido + "€");
-				detallesPedido.add(fechaES + " | " + horaCompleta);
-				detallesPedido.add(opciones[(int)estadoPedido] + "");
+				detallesPedido.add(idPedido + " - " + idLibroFK + " - " + tituloLibro + " - " + precioLibro + "€" + " - " + cantidad + " - " + "El " + fechaES + " - " + "a las: " + horaCompleta + " - " + totalPedido + "€" + " - " + opciones[(int)estadoPedido]);
 			}
 		}
 		catch(Exception ex)
@@ -1238,7 +1234,8 @@ public class ModeloMVC {
 		Statement stmt = null;
 		
 		int estadoPedido = 0;
-		if (detallesPedido.get(6).equals("No Enviado")) {
+		String[] datos = detallesPedido.get(1).split(" - ");
+		if (datos[8].equals("No Enviado")) {
 			estadoPedido = 1;
 		}else{
 			estadoPedido = 0;
@@ -1262,8 +1259,7 @@ public class ModeloMVC {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "UPDATE pedidos SET estadoPedido = " + estadoPedido + " WHERE idPedido = " + detallesPedido.get(1)+ ";";
-			System.out.println(sentenciaSQL);
+			String sentenciaSQL = "UPDATE pedidos SET estadoPedido = " + estadoPedido + " WHERE idPedido = " + datos[1] + ";";
 			stmt.executeUpdate(sentenciaSQL);
 		}
 		catch(Exception ex)
@@ -1291,7 +1287,8 @@ public class ModeloMVC {
 	}
 	
 	public static void actualizardatosPedido(){
-		String idPedido = detallesPedido.get(1);
+		String[] datos = detallesPedido.get(1).split(" - ");
+		String idPedido = datos[1];
 		detallesPedido.clear();
 		detallesPedido(idPedido);
 	}
