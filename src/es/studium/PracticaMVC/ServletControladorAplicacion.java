@@ -50,6 +50,7 @@ public class ServletControladorAplicacion extends HttpServlet
 				nextPage = "/gestionlibros.jsp";
 			}
 		}else if(todo.equals("consultalibros")){
+			ModeloMVC.borrarArrayLists();
 			String libroSeleccionado = request.getParameter("libros");
 			ModeloMVC.determinarLibro(libroSeleccionado);
 			nextPage = "/modificacionlibros.jsp";

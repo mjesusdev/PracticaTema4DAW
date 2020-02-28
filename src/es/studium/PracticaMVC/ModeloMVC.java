@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -94,9 +95,7 @@ public class ModeloMVC {
 		
 		try
 		{
-			// Crea un contexto para poder luego buscar el recurso DataSource
 			InitialContext ctx = new InitialContext();
-			// Busca el recurso DataSource en el contexto
 			pool = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql_tiendalibros_practica");
 			if(pool == null)
 			{
@@ -258,7 +257,6 @@ public class ModeloMVC {
 	public static ArrayList<String> insertarAutores() {
 		Connection conn = null;
 		Statement stmt = null;
-		// No se si va a funcionar xDD
 		ArrayList<String> informacionAutores = new ArrayList<String>();
 		informacionAutores.add("");
 		
@@ -454,7 +452,6 @@ public class ModeloMVC {
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
 			String sentenciaSQL = "INSERT INTO escriben VALUES(NULL, " + sacarUltimoLibro() + ", " + autorSeleccionado + ");";
-			System.out.println(sentenciaSQL);
 			stmt.executeUpdate(sentenciaSQL);
 		}
 		catch(Exception ex)
@@ -504,7 +501,6 @@ public class ModeloMVC {
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
 			String sentenciaSQL = "INSERT INTO pertenecen VALUES(NULL, " + sacarUltimoLibro() + ", " + editorialSeleccionada + ");";
-			System.out.println(sentenciaSQL);
 			stmt.executeUpdate(sentenciaSQL);
 		}
 		catch(Exception ex)
@@ -849,7 +845,6 @@ public class ModeloMVC {
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
 			String sentenciaSQL = "UPDATE libros SET tituloLibro = '"+tituloLibro+"', precioLibro = " + precioLibro + " WHERE idLibro = "+ saberLibro().get(2) +";";
-			System.out.println(sentenciaSQL);
 			stmt.executeUpdate(sentenciaSQL);
 		}
 		catch(Exception ex)
@@ -900,7 +895,6 @@ public class ModeloMVC {
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
 			String sentenciaSQL = "SELECT idEscriben FROM escriben WHERE idLibroFK = " +saberLibro().get(2)+ ";";
-			System.out.println(sentenciaSQL);
 			ResultSet rs = stmt.executeQuery(sentenciaSQL);
 			while (rs.next()) 
 			{
@@ -956,7 +950,6 @@ public class ModeloMVC {
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
 			String sentenciaSQL = "SELECT idPertenecen FROM pertenecen WHERE idLibroFK = " +saberLibro().get(2)+ ";";
-			System.out.println(sentenciaSQL);
 			ResultSet rs = stmt.executeQuery(sentenciaSQL);
 			while (rs.next()) 
 			{
@@ -1063,7 +1056,7 @@ public class ModeloMVC {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			String sentenciaSQL = "UPDATE pertenecen SET idAutorFK = " +editorialSeleccionada+ " WHERE idEscriben = " +sacarIdRelacionEditorialesLibros()+ ";";
+			String sentenciaSQL = "UPDATE pertenecen SET idEditorialFK = " +editorialSeleccionada+ " WHERE idPertenecen = " +sacarIdRelacionEditorialesLibros()+ ";";
 			stmt.executeUpdate(sentenciaSQL);
 		}
 		catch(Exception ex)
@@ -1096,7 +1089,7 @@ public class ModeloMVC {
 		
 		ArrayList<String> datosPedidos = new ArrayList<String>();
 		datosPedidos.add("");
-		
+
 		try
 		{
 			InitialContext ctx = new InitialContext();
@@ -1122,9 +1115,13 @@ public class ModeloMVC {
 				int idPedido = rs.getInt("idPedido");
 				Float totalPedido  = rs.getFloat("totalPedido");
 				Date fechaPedido = rs.getDate("fechaPedido");
-				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
 				Time horaPedido = rs.getTime("horaPedido");
-				datosPedidos.add("Pedido Nº " + idPedido + " | " + totalPedido + "€" + " | " + fechaES + " | " + horaPedido);
+				String guardarHora = horaPedido + "";
+				String[] sacarhora = guardarHora.split(":");
+				String horaES = sacarhora[0];
+				int restarhora = Integer.parseInt(horaES)-1;
+				String horaCompleta = restarhora + ":" + sacarhora[1] + ":" + sacarhora[2];
+				datosPedidos.add("Pedido Nº " + idPedido + " | " + totalPedido + "€" + " | " + fechaPedido + " | " + horaCompleta);
 			}
 		}
 		catch(Exception ex)
@@ -1185,6 +1182,11 @@ public class ModeloMVC {
 				Date fechaPedido = rs.getDate("fechaPedido");
 				String fechaES = new SimpleDateFormat("dd-MM-yyyy").format(fechaPedido);
 				Time horaPedido = rs.getTime("horaPedido");
+				String guardarHora = horaPedido + "";
+				String[] sacarhora = guardarHora.split(":");
+				String horaES = sacarhora[0];
+				int restarhora = Integer.parseInt(horaES)-1;
+				String horaCompleta = restarhora + ":" + sacarhora[1] + ":" + sacarhora[2];
 				int idLibroFK = rs.getInt("idLibroFK");
 				String tituloLibro = rs.getString("tituloLibro");
 				int cantidad = rs.getInt("cantidad");
@@ -1197,7 +1199,7 @@ public class ModeloMVC {
 				detallesPedido.add(idLibroFK + " | " + tituloLibro);
 				detallesPedido.add(cantidad + "");
 				detallesPedido.add(totalPedido + "");
-				detallesPedido.add(fechaES + " | " + horaPedido);
+				detallesPedido.add(fechaES + " | " + horaCompleta);
 				detallesPedido.add(opciones[(int)estadoPedido] + "");
 			}
 		}

@@ -7,14 +7,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<link rel="stylesheet" href="./css/estilo.css" type="text/css">
-		<title>Gestión de Libros - Modificación</title>
+		<title>Modificación Libros</title>
 	</head>
 	<body>
 		<div class="container">
 			<div class="row">
 				<div class="col-12 mt-2">
 					<div class="p-4 mb-3 bg-dark text-white">
-						<h1 class="text-danger">Gestión de Libros - Aplicación de Gestión (Modificación)</h1>
+						<h1 class="text-danger">Modificación de Libros - Aplicación de Gestión</h1>
 					</div>
 				</div>
 			</div>
@@ -23,7 +23,7 @@
 					<!--  BreadCrumb -->
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="./login.jsp">Login</a></li>
+							<li class="breadcrumb-item"><a>Login</a></li>
 							<li class="breadcrumb-item"><a href="./aplicaciongestion.jsp">Aplicación Gestión</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Gestión de Libros</li>
 						</ol>
@@ -73,9 +73,6 @@
 								    <input type="text" class="form-control" name="precioLibro" value="<% out.println(ModeloMVC.saberLibro().get(1));%>">
 								</div>
 								<div class="form-group">
-									<p class="text-secondary">Autor Seleccionado en la BD: <% out.println(ModeloMVC.identificarAutor());%></p>
-								</div>
-								<div class="form-group">
 									<label for="autores">Modificar autor:</label>
 									<select class="form-control" name="autores" id="autores">
 										<%
@@ -88,7 +85,7 @@
 								    </select>
 								</div>
 								<div class="form-group">
-									<p class="text-secondary">Editorial Seleccionada en la BD: <% out.println(ModeloMVC.identificarEditorial());%></p>
+									<p class="text-secondary">Autor Seleccionado en la BD: <% out.println(ModeloMVC.identificarAutor());%></p>
 								</div>
 								<div class="form-group">
 									<label for="editoriales">Modificar editorial:</label>
@@ -101,6 +98,9 @@
 											}
 										%>
 								    </select>
+								</div>
+								<div class="form-group">
+									<p class="text-secondary">Editorial Seleccionada en la BD: <% out.println(ModeloMVC.identificarEditorial());%></p>
 								</div>
 								<input type="submit" class="btn btn-primary" value="Modificar Libro">
 							</form>

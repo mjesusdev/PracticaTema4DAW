@@ -30,7 +30,7 @@ public class ServletControladorLogin extends HttpServlet
 	{
 		// Indicar codificación de carácteres UTF-8
 		request.setCharacterEncoding("UTF-8");
-		// Guardar en variables el usuario y contrase�a enviados por login.jsp
+		// Guardar en variables el usuario y contraseña enviados por login.jsp
 		String nombreUsuario = request.getParameter("inputUsuario");
 		String passUsuario = request.getParameter("inputPassword");
 		String nextPage = "";

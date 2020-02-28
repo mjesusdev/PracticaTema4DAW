@@ -5,6 +5,7 @@ public class ElementoPedido
 	private int idLibro;
 	private int idAutor;
 	private int cantidad;
+	
 	public ElementoPedido(int idLibro, int idAutor, int cantidad)
 	{
 		this.idLibro = idLibro;

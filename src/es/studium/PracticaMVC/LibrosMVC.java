@@ -42,7 +42,6 @@ public class LibrosMVC
 			}
 		}
 		catch(NamingException ex){} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -80,7 +79,6 @@ public class LibrosMVC
 			}
 		}
 		catch(NamingException ex){} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -149,7 +147,6 @@ public class LibrosMVC
 			}
 		}
 		catch(NamingException ex){} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -159,7 +156,6 @@ public class LibrosMVC
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
 			String sentenciaSQL = "INSERT INTO pedidos VALUES(NULL, '"+totalPedido+"', '"+fechaPedido+"', '"+horaCompletaPedido+"', 0, 1);";
-			System.out.println(sentenciaSQL);
 			stmt.executeUpdate(sentenciaSQL);	
 		}
 		catch(Exception ex)
@@ -201,7 +197,6 @@ public class LibrosMVC
 			}
 		}
 		catch(NamingException ex){} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -255,7 +250,6 @@ public class LibrosMVC
 			}
 		}
 		catch(NamingException ex){} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -265,7 +259,6 @@ public class LibrosMVC
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
 			String sentenciaSQL = "INSERT INTO lineapedidos VALUES(NULL, "+idLibro+", "+sacaridPedido()+", "+cantidadTotalOrdenada+");";
-			System.out.println(sentenciaSQL);
 			stmt.executeUpdate(sentenciaSQL);	
 		}
 		catch(Exception ex)

@@ -65,7 +65,7 @@ public class ServletControlador extends HttpServlet
 			{
 				// Comprueba si el libro está ya en el carrito
 				// Si lo está, actualizamos la cantidad
-				// Si no está, lo a�adimos
+				// Si no está, lo añadimos
 				boolean encontrado = false;
 				Iterator<ElementoPedido> iter = elCarrito.iterator();
 				while(!encontrado&&iter.hasNext())
@@ -97,7 +97,6 @@ public class ServletControlador extends HttpServlet
 		}
 		else if (todo.equals("checkout"))
 		{
-			// ¿Pasar al modelo?
 			// Enviado por order.jsp
 			// Calcula el precio total de todos los elementos del carrito
 			float precioTotal = 0;

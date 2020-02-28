@@ -22,7 +22,7 @@
 					<!--  BreadCrumb -->
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="./login.jsp">Login</a></li>
+							<li class="breadcrumb-item"><a>Login</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Aplicación Gestión</li>
 						</ol>
 					</nav>
@@ -42,7 +42,7 @@
 						      	<a class="nav-item nav-link" href="./gestionpedidos.jsp">Gestión de Pedidos</a>
 						      	<form action="aplicacion" method="post">
 						      		<input type="hidden" name="todo" value="logout">
-						      		<button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt" id="logout"></i></button>
+						      		<button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
 						      	</form>
 					    	</div>
 					  	</div>
